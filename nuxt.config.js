@@ -25,20 +25,26 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/vue-moveable.js',
-    '@/plugins/vue-draggable-resizable.js'
+    '@/plugins/vue-draggable-resizable.js',
+    '@/plugins/vue-upload-image.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+  target: 'static',
   buildModules: [
     // https://go.nuxtjs.dev/eslint
+    '@nuxt/image',
     '@nuxtjs/eslint-module'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    'nuxt-material-design-icons',
+    // '@nuxt/image',
+    // 'nuxt-vue-material'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

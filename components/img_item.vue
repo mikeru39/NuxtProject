@@ -5,7 +5,6 @@
     :w="item.width"
     :x="item.x"
     :y="item.y"
-    :style="editColor+zIndex"
     @activated="focused = true"
     @deactivated="focused = false"
     @dragging="onDrag"
@@ -17,26 +16,15 @@
     <button v-show="focused" class="btn-remove">
       <span class="material-icons md-24" @click="remove">delete</span>
     </button>
+
     <svg
-      v-if="item.type === 'text'"
       :height="item.height"
       :width="item.width"
       viewBox="0 0 297 210"
+      @dblclick="inputFocus = true"
     >
-      <text
-
-        :font-size="fontSize"
-        :font-family="item.fontFamily"
-        dominant-baseline="middle"
-        text-anchor="middle"
-        x="50%"
-        y="50%"
-      >{{ item.text }}
-      </text>
+      <img src="assets/rect.svg" alt="">
     </svg>
-    <div :width="wToPx" :height="hToPx">
-      <img :width="wToPx" :height="hToPx" src="~/assets/rect.svg" style="object-fit: contain">
-    </div>
   </vue-draggable-resizable>
 </template>
 
@@ -75,12 +63,6 @@ export default {
         return '; z-index: 99'
       }
       return ''
-    },
-    wToPx () {
-      return this.item.width + 'px'
-    },
-    hToPx () {
-      return this.item.height + 'px'
     }
   },
   methods: {
@@ -129,6 +111,11 @@ export default {
   display: flex;
   right: 8px;
   top: 8px;
+  padding: 0
+}
+
+.btn-ok {
+  display: flex;
   padding: 0
 }
 

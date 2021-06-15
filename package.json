@@ -12,13 +12,19 @@
   },
   "dependencies": {
     "core-js": "^3.9.1",
+    "material-icons": "^0.7.2",
     "nuxt": "^2.15.3",
+    "nuxt-material-design-icons": "^1.0.4",
+    "nuxt-vue-material": "^1.2.0",
     "vue": "^2.6.14",
     "vue-draggable-resizable": "^2.3.0",
     "vue-moveable": "^1.8.10",
-    "vue2-touch-events": "^3.2.2"
+    "vue-upload-image": "^1.1.5",
+    "vue2-touch-events": "^3.2.2",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
+    "@nuxt/image": "^0.4.14",
     "@nuxt/types": "^2.15.7",
     "@nuxtjs/eslint-config": "^6.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",

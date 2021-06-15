@@ -1,20 +1,28 @@
 <template>
   <main>
-    <div style="height: 800px; width: 800px; border: 1px solid red">
+    <div style="float: left; height: 800px; width: 800px; border: 1px solid red">
       <TextItem
-        v-for="item in items"
-        :key="item.id"
+        v-for="(item, key) in items"
+        :key="key"
         :item="item"
-        @onResize="onResize($event, item.id)"
-        @onDrag="onDrag($event, item.id)"
+        :editing="key === editId"
+        @onResize="onResize($event, key)"
+        @onEdit="onEdit(key)"
+        @onDrag="onDrag($event, key)"
+        @remove="removeItem(key)"
       />
     </div>
-    <button @click="addItem">
-      add
-    </button>
-    <button @click="removeItem">
-      remove
-    </button>
+    <div>
+      <input v-model="text" type="text">
+      <input v-model="fontSize" type="number">
+      <select v-model="fontFamily">
+        <option>roboto</option>
+        <option>open sans</option>
+      </select>
+      <button @click="addItem">
+        add
+      </button>
+    </div>
   </main>
 </template>
 
@@ -23,66 +31,95 @@ import TextItem from '../components/text_item'
 
 export default {
   components: {
-    TextItem
+    TextItem,
   },
-
   data () {
     return {
-      items: [
-        {
-          id: 0,
-          width: 297,
-          height: 210,
-          x: 0,
-          y: 220,
-          font: 14,
-          text: 'Mike!'
-        }
-
-      ],
-
-      width: 297,
-      height: 210,
-      x: (800 - 297) / 2,
-      y: (800 - 210) / 2,
-      font: 10
+      editId: 0,
+      imageData: ''
     }
   },
   computed: {
-    kotFontPts () {
-      return this.font * (220 / this.height) + 'pt'
+    items () {
+      return this.$store.state.items.items
     },
-    viewBox () {
-      return '0 0 ' + 320 + ' ' + 220
+    text: {
+      get () {
+        if (this.editId === null && this.$store.state.items.items.length === 0) {
+          return ' '
+        }
+        return this.$store.state.items.items[this.editId].text
+      },
+      set (text) {
+        if (this.editId !== null) {
+          this.$store.commit('items/updateText', {
+            text,
+            id: this.editId
+          })
+        }
+      }
+    },
+    fontSize: {
+      get () {
+        if (this.editId === null && this.$store.state.items.items.length === 0) {
+          return ' '
+        }
+        return this.$store.state.items.items[this.editId].font
+      },
+      set (fontSize) {
+        if (this.editId !== null) {
+          this.$store.commit('items/updateFontSize', {
+            fontSize,
+            id: this.editId
+          })
+        }
+      }
+    },
+    fontFamily: {
+      get () {
+        if (this.editId === null && this.$store.state.items.items.length === 0) {
+          return ' '
+        }
+        return this.$store.state.items.items[this.editId].fontFamily
+      },
+      set (fontFamily) {
+        if (this.editId !== null) {
+          this.$store.commit('items/updateFontFamily', {
+            fontFamily,
+            id: this.editId
+          })
+        }
+      }
     }
 
   },
   methods: {
+    onEdit (key) {
+      console.log(key)
+      this.editId = key
+      console.log(this.editId)
+    },
+    editText (text) {
+      console.log(text)
+    },
     onResize (data, id) {
-      this.items[id].x = data.x
-      this.items[id].y = data.y
-      this.items[id].width = data.width
-      this.items[id].height = data.height
-    },
-    onDrag (data, id) {
-      this.items[id].x = data.x
-      this.items[id].y = data.y
-    },
-    addItem () {
-      console.log('item add')
-      this.items.push({
-        id: this.items.length,
-        width: 297,
-        height: 210,
-        x: 0,
-        y: 0,
-        font: 10,
-        text: 'Hello' + this.items.length
+      this.$store.commit('items/onResize', {
+        data,
+        id
       })
     },
-    removeItem () {
-      this.items.splice(-1, 1)
-    }
+    onDrag (data, id) {
+      this.$store.commit('items/onDrag', {
+        data,
+        id
+      })
+    },
+    addItem () {
+      this.$store.commit('items/add')
+    },
+    removeItem (id) {
+      this.$store.commit('items/remove', { id })
+    },
   }
 }
 </script>
