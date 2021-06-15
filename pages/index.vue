@@ -1,7 +1,21 @@
 <template>
-  <div style="height: 800px; width: 800px; border: 1px solid red;position: fixed">
-    <TextItem v-for="item in items" :key="item.id" :item="item" @onResize="onResize($event, item.id)" />
-  </div>
+  <main>
+    <div style="height: 800px; width: 800px; border: 1px solid red">
+      <TextItem
+        v-for="item in items"
+        :key="item.id"
+        :item="item"
+        @onResize="onResize($event, item.id)"
+        @onDrag="onDrag($event, item.id)"
+      />
+    </div>
+    <button @click="addItem">
+      add
+    </button>
+    <button @click="removeItem">
+      remove
+    </button>
+  </main>
 </template>
 
 <script>
@@ -16,20 +30,13 @@ export default {
     return {
       items: [
         {
-          id: 1,
-          width: 297,
-          height: 210,
-          x: 0,
-          y: 0,
-          font: 14
-        },
-        {
-          id: 2,
+          id: 0,
           width: 297,
           height: 210,
           x: 0,
           y: 220,
-          font: 14
+          font: 14,
+          text: 'Mike!'
         }
 
       ],
@@ -56,27 +63,31 @@ export default {
       this.items[id].y = data.y
       this.items[id].width = data.width
       this.items[id].height = data.height
+    },
+    onDrag (data, id) {
+      this.items[id].x = data.x
+      this.items[id].y = data.y
+    },
+    addItem () {
+      console.log('item add')
+      this.items.push({
+        id: this.items.length,
+        width: 297,
+        height: 210,
+        x: 0,
+        y: 0,
+        font: 10,
+        text: 'Hello' + this.items.length
+      })
+    },
+    removeItem () {
+      this.items.splice(-1, 1)
     }
-    // onDrag ({
-    //   x,
-    //   y
-    // }, id) {
-    //   console.log(x, y, id)
-    //   this.x = x
-    //   this.y = y
-    // }
-
   }
 }
 </script>
 
 <style scoped>
-main {
-  text-align: center;
-  background-color: red;
-  width: 800px;
-  height: 800px;
-}
 
 .block {
   height: 100px;

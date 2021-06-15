@@ -7,7 +7,18 @@
     :y="item.y"
     @dragging="onDrag"
     @resizing="onResize"
-  />
+  >
+    <svg :width="item.width" :height="item.height" viewBox="0 0 297 210">
+      <text
+        x="50%"
+        y="50%"
+        dominant-baseline="middle"
+        :fontSize="item.font "
+        :font-size-adjust="(220 / item.height)"
+        text-anchor="middle"
+      >{{ item.text }}</text>
+    </svg>
+  </vue-draggable-resizable>
 </template>
 
 <script>
@@ -20,6 +31,9 @@ export default {
   },
   props: {
     item: Object
+  },
+  computed: {
+
   },
   methods: {
     onResize (x, y, width, height) {
@@ -34,8 +48,10 @@ export default {
       x,
       y
     ) {
-      this.x = x
-      this.y = y
+      this.$emit('onDrag', {
+        x,
+        y
+      })
     }
   }
 }
