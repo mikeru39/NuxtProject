@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div style="float: left; height: 800px; width: 800px; border: 1px solid red">
+    <div style="float: left; height:800px; width: 1100px; border: 1px solid red">
       <TextItem
         v-for="(item, key) in items"
         :key="key"
@@ -31,7 +31,7 @@ import TextItem from '../components/text_item'
 
 export default {
   components: {
-    TextItem,
+    TextItem
   },
   data () {
     return {
@@ -119,7 +119,7 @@ export default {
     },
     removeItem (id) {
       this.$store.commit('items/remove', { id })
-    },
+    }
   }
 }
 </script>

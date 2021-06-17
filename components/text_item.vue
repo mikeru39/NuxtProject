@@ -19,12 +19,13 @@
     </button>
     <svg
       v-if="item.type === 'text'"
+      xmlns="http://www.w3.org/2000/svg"
       :height="item.height"
       :width="item.width"
-      viewBox="0 0 297 210"
+      preserveAspectRatio="xMidYMid meet"
     >
       <text
-
+        lengthAdjust="spacing"
         :font-size="fontSize"
         :font-family="item.fontFamily"
         dominant-baseline="middle"
@@ -34,7 +35,7 @@
       >{{ item.text }}
       </text>
     </svg>
-    <div :width="wToPx" :height="hToPx">
+    <div v-else :width="wToPx" :height="hToPx">
       <img :width="wToPx" :height="hToPx" src="~/assets/rect.svg" style="object-fit: contain">
     </div>
   </vue-draggable-resizable>
@@ -59,6 +60,7 @@ export default {
     }
   },
   computed: {
+
     editColor () {
       if (this.editing) {
         return 'border-color: red'
@@ -67,8 +69,8 @@ export default {
       }
     },
     fontSize () {
-      console.log(800 / 297 * (this.item.font / 72 * 25.4))
-      return 800 / 297 * (this.item.font / 72 * 25.4) + 'pt'
+      console.log(800 / (this.item.height / 80) * (this.item.font / 72) + 'ex')
+      return 800 * (this.item.font / 72) + 'in'
     },
     zIndex () {
       if (this.focused) {
@@ -132,7 +134,7 @@ export default {
   padding: 0
 }
 
-.handle {
-  display: block;
-}
+/*.handle {*/
+/*  display: block;*/
+/*}*/
 </style>

@@ -1,7 +1,7 @@
 export const state = () => ({
   items: [
     {
-      type: 'img',
+      type: 'text',
       width: 297,
       height: 210,
       x: 0,
